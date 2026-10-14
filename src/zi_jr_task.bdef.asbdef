@@ -1,0 +1,153 @@
+managed implementation in class zbp_i_jr_task unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_JR_TASK alias Task
+persistent table zjr_task
+draft table zjr_task_d
+lock master total etag LastChangedAt
+
+authorization master ( instance )
+
+etag master LastChangedAt
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+  draft determine action Prepare;
+
+  field ( readonly, numbering : managed ) TaskUUID;
+
+  determination set_default_values on save { create; }
+  determination set_task_id on save { create; }
+  validation validate_delivery_date on save { create; update; field DeliveryDate; }
+
+  action cancel_request parameter ZI_JR_POPUP;
+  action finish_request result [0..1] $self;
+
+  side effects
+  {
+    //Refresca despúés de la acción cancel_request
+    action cancel_request affects $self;
+  }
+
+  association _Details { create; with draft; }
+  association _Objects { create; with draft; }
+  association _Attachment { create; with draft; }
+
+  mapping for zjr_task
+    {
+      TaskUUID      = task_uuid;
+      TaskID        = task_id;
+      Name          = name;
+      Description_  = description_;
+      Area          = area;
+      CancelReason  = cancel_reason;
+      CreatedDate   = created_date;
+      DeliveryDate  = delivery_date;
+      Package_      = package_;
+      Priority      = priority;
+      Status        = status;
+      Ticket        = ticket;
+      Leader        = leader;
+      Attachment    = attachment;
+      Mimetype      = mimetype;
+      Filename      = filename;
+      CreatedAt     = created_at;
+      CreatedBy     = created_by;
+      LastChangedAt = last_changed_at;
+      LastChangedBy = last_changed_by;
+    }
+}
+
+define behavior for ZI_JR_TASK_DETAILS alias Task_Details
+persistent table zjr_task_details
+draft table zjr_task_det_d
+
+lock dependent by _Task
+authorization dependent by _Task
+etag master LastChangedAt
+{
+  update;
+  delete;
+  field ( readonly ) TaskUUID;
+  field ( readonly, numbering : managed ) DetailUUID;
+  association _Task { with draft; }
+
+  mapping for zjr_task_details
+    {
+      TaskUUID      = task_uuid;
+      DetailUUID    = detail_uuid;
+      Description   = description;
+      CreatedDate   = created_date;
+      OrderNumber   = order_number;
+      OrderType     = order_type;
+      Status        = status;
+      Ticket        = ticket;
+      CreatedAt     = created_at;
+      CreatedBy     = created_by;
+      LastChangedAt = last_changed_at;
+      LastChangedBy = last_changed_by;
+    }
+}
+
+define behavior for ZI_JR_TASK_OBJECTS alias Task_Objects
+persistent table zjr_task_objects
+draft table zjr_task_obj_d
+
+lock dependent by _Task
+authorization dependent by _Task
+etag master LastChangedAt
+{
+  update;
+  delete;
+  field ( readonly ) TaskUUID;
+  field ( readonly, numbering : managed ) ObjectUUID;
+  association _Task { with draft; }
+
+  mapping for zjr_task_objects
+    {
+      TaskUUID      = task_uuid;
+      ObjectUUID    = object_uuid;
+      ObjectType    = object_type;
+      ObjectName    = object_name;
+      CreatedAt     = created_at;
+      CreatedBy     = created_by;
+      LastChangedAt = last_changed_at;
+      LastChangedBy = last_changed_by;
+    }
+}
+
+define behavior for ZI_JR_TASK_ATTACHMENT alias Task_Attachment
+persistent table zjr_task_attach
+draft table zjr_task_atach_d
+
+lock dependent by _Task
+authorization dependent by _Task
+etag master LastChangedAt
+{
+  update;
+  delete;
+  field ( readonly ) TaskUUID;
+  field ( readonly, numbering : managed ) AttachUUID;
+  association _Task { with draft; }
+
+  mapping for zjr_task_attach
+    {
+      TaskUUID      = task_uuid;
+      AttachUUID    = attach_uuid;
+      Attachment    = attachment;
+      Filename      = filename;
+      Mimetype      = mimetype;
+      Texto         = texto;
+      CreatedAt     = created_at;
+      CreatedBy     = created_by;
+      LastChangedAt = last_changed_at;
+      LastChangedBy = last_changed_by;
+    }
+}

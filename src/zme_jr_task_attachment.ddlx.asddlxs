@@ -1,0 +1,43 @@
+@Metadata.layer: #CORE
+annotate view ZC_JR_TASK_ATTACHMENT with
+{
+
+  @UI.facet: [{ id: 'TaskAttachment',
+                    importance: #HIGH,
+                    label: 'Task Attachment',
+                    purpose: #STANDARD,
+                    type: #IDENTIFICATION_REFERENCE 
+              }] 
+
+  @UI.adaptationHidden: true
+  TaskUUID;
+
+  @UI.adaptationHidden: true
+  AttachUUID;
+
+  @EndUserText.label: 'Attachments'  
+  @UI: { lineItem: [{ position: 10, importance: #HIGH, cssDefault: { width: '30rem'} }],
+         identification: [{ position: 10 }]         
+       }           
+  Attachment;
+
+  @EndUserText.label: 'Mimetype'
+  @UI: { lineItem: [{ position: 20, importance: #HIGH, cssDefault: { width: '10rem'}  }],
+         identification: [{ position: 20 }]
+       }
+  Mimetype;
+
+  @EndUserText.label: 'Filename'
+  @UI: { lineItem: [{ position: 30, importance: #HIGH  }],
+         identification: [{ position: 30 }]
+       }
+  Filename;
+  
+  @EndUserText.label: 'Description'
+  @UI: { lineItem: [{ position: 40, importance: #HIGH  }],
+         identification: [{ position: 40 }]
+       }
+  Texto;
+
+
+}

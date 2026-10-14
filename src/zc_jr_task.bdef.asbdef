@@ -1,0 +1,47 @@
+projection;
+strict ( 2 );
+use draft;
+use side effects;
+
+define behavior for ZC_JR_TASK alias Task
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Activate;
+  use action Discard;
+  use action Edit;
+  use action Resume;
+  use action Prepare;
+  use action cancel_request;
+  use action finish_request;
+
+  use association _Details { create; with draft; }
+  use association _Objects { create; with draft; }
+  use association _Attachment { create; with draft; }
+}
+
+define behavior for ZC_JR_TASK_DETAILS alias Task_Details
+{
+  use update;
+  use delete;
+
+  use association _Task { with draft; }
+}
+
+define behavior for ZC_JR_TASK_OBJECTS alias Task_Objects
+{
+  use update;
+  use delete;
+
+  use association _Task { with draft; }
+}
+
+define behavior for ZC_JR_TASK_ATTACHMENT alias Task_Attachment
+{
+  use update;
+  use delete;
+
+  use association _Task { with draft; }
+}

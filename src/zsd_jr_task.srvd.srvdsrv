@@ -1,0 +1,7 @@
+@EndUserText.label: 'Task Services Definition'
+define service ZSD_JR_TASK {
+  expose ZC_JR_TASK            as Task;
+  expose ZC_JR_TASK_DETAILS    as Details;
+  expose ZC_JR_TASK_OBJECTS    as Objects;
+  expose ZC_JR_TASK_ATTACHMENT as Attachments;
+}

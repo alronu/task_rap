@@ -1,0 +1,41 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+                title: {
+                     type: #STANDARD,
+                     label: 'Objects',
+                     value: 'ObjectType'
+                        } , 
+                 description: { 
+                                label: 'Task Objects',
+                                value: 'ObjectName' 
+                              }
+                 }
+annotate entity ZC_JR_TASK_OBJECTS with
+{
+
+  @UI.facet: [{ id: 'TaskObjects',
+                    importance: #HIGH,
+                    label: 'Task Objects',
+                    purpose: #STANDARD,
+                    type: #IDENTIFICATION_REFERENCE 
+              }]  
+              
+  @UI.adaptationHidden: true
+  TaskUUID;
+
+  @UI.adaptationHidden: true
+  ObjectUUID;
+
+  @EndUserText.label: 'Object Type'
+  @UI: { lineItem: [{ position: 10, importance: #HIGH  }],
+         identification: [{ position: 10 }]
+       }
+  ObjectType;
+
+  @EndUserText.label: 'Object Name'
+  @UI: { lineItem: [{ position: 20, importance: #HIGH  }],
+         identification: [{ position: 20 }]
+       }
+  ObjectName;
+
+}

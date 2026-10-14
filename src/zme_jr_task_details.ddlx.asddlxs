@@ -1,0 +1,79 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+                title: {
+                     type: #STANDARD,
+                     label: 'Task Details',
+                     value: 'OrderNumber'
+                        } , 
+                 description: { 
+                                label: 'Task Details',
+                                value: 'Description' 
+                              }
+                 }
+annotate entity ZC_JR_TASK_DETAILS with
+{
+    
+  @UI.facet: [{ id: 'TaskDetails',
+                    importance: #HIGH,
+                    label: 'Task Details',
+                    purpose: #STANDARD,
+                    type: #IDENTIFICATION_REFERENCE 
+              }]  
+
+  @UI.adaptationHidden: true
+  TaskUUID;
+
+  @UI.adaptationHidden: true
+  DetailUUID;
+
+  @EndUserText.label: 'Order Number'
+  @UI: { lineItem: [{ position: 20, importance: #HIGH  }],
+         identification: [{ position: 20 }]
+       }
+  OrderNumber;
+
+  @EndUserText.label: 'Order Type'
+  @UI: { lineItem: [{ position: 30, 
+                      importance: #HIGH,
+                      cssDefault: { width: '8rem'}  }],
+         identification: [{ position: 30 }],
+         textArrangement: #TEXT_LAST
+       }
+  OrderType;
+
+  @EndUserText.label: 'Status'
+  @UI: { lineItem: [{ position: 40, 
+                      importance: #HIGH, 
+                      cssDefault: { width: '15rem'},
+                      criticality: 'StatusCriticality',
+                      criticalityRepresentation: #WITH_ICON }],
+         identification: [{ position: 40,
+                            criticality: 'StatusCriticality',
+                            criticalityRepresentation: #WITH_ICON         
+                         }],
+         textArrangement: #TEXT_LAST
+       }
+  Status;
+
+  @EndUserText.label: 'Description'
+  @UI: { lineItem: [{ position: 50, importance: #HIGH, cssDefault: { width: '30rem'}  }],
+         identification: [{ position: 50 }]
+       }
+  Description;
+
+  @EndUserText.label: 'Created Date'
+  @UI: { lineItem: [{ position: 60, importance: #HIGH  }],
+         identification: [{ position: 60 }]
+       }
+  CreatedDate;
+
+  @EndUserText.label: 'Ticket'
+  @UI: { lineItem: [{ position: 70, importance: #HIGH  }],
+         identification: [{ position: 70 }]
+       }
+  Ticket;
+
+  @UI.adaptationHidden: true
+  StatusCriticality;
+
+}

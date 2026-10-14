@@ -1,0 +1,204 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+                typeName: 'Task',
+                typeNamePlural: 'Tasks',
+                
+                title: {
+                    type: #STANDARD,
+                    label: 'Task',
+                    value: 'Name'                    
+                },
+                description: {
+                    type: #STANDARD,
+                    label: 'Task',
+                    value: 'StatusText'
+                }, 
+                imageUrl: 'Attachment'
+}
+annotate view ZC_JR_TASK with
+{
+
+  @UI.facet: [
+                {
+                    id: 'task',
+                    label: 'Task',
+                    purpose: #STANDARD,
+                    position: 10,
+                    targetQualifier: 'Task',
+                    type: #IDENTIFICATION_REFERENCE
+                },
+
+                {
+                    id: 'task_description',
+                    importance: #HIGH,
+                    label: 'Task Description',
+                    position: 15,
+                    purpose: #STANDARD,
+                    targetQualifier: 'Description',
+                    type: #FIELDGROUP_REFERENCE
+                },
+
+                {
+                    id: 'cancel',
+                    importance: #HIGH,
+                    label: 'Cancel Reason',
+                    position: 16,
+                    purpose: #STANDARD,
+                    targetQualifier: 'cancel',
+                    type: #FIELDGROUP_REFERENCE
+                },
+
+                {
+                    id: 'task_details',
+                    label: 'Task Details',
+                    purpose: #STANDARD,
+                    position: 20,
+                    type: #LINEITEM_REFERENCE  ,
+                    targetElement: '_Details'
+                }
+                ,
+                {
+                    id: 'task_objects',
+                    label: 'Task Objects',
+                    purpose: #STANDARD,
+                    position: 30,
+                    type: #LINEITEM_REFERENCE,
+                    targetElement: '_Objects'
+                },
+                
+                {
+                    id: 'task_attachment',
+                    label: 'Task Attachment',
+                    purpose: #STANDARD,
+                    position: 40,
+                    type: #LINEITEM_REFERENCE,
+                    targetElement: '_Attachment'
+                }                
+  ]
+
+  @UI.lineItem: [{ type: #FOR_ACTION,
+                   dataAction: 'cancel_request',
+                   label: 'Cancel Task',
+                   requiresContext: true,
+                   invocationGrouping: #CHANGE_SET
+                 }]
+
+  @UI.adaptationHidden: true
+  TaskUUID;
+
+  @UI.lineItem: [{ type: #FOR_ACTION,
+                   dataAction: 'finish_request',
+                   label: 'Finish Task',
+                   requiresContext: true,
+                   invocationGrouping: #CHANGE_SET
+                 }]
+  @UI.adaptationHidden: true
+  CreatedBy;
+  
+  @EndUserText.label: 'TaskID'
+  @UI: { lineItem: [{ position: 1, 
+                      importance: #HIGH, 
+                      cssDefault: { width: '4rem'}        
+                     }],
+         selectionField: [{ position: 1, qualifier: 'Task' }]
+       }
+  TaskID;
+
+  @EndUserText.label: 'Status'
+  @UI: { lineItem: [{ position: 5,
+                      importance: #HIGH,
+                      criticality: 'StatusCriticality',
+                      criticalityRepresentation: #WITH_ICON,
+                      cssDefault: { width: '12rem'}
+                     } ],
+         identification: [{ position: 5,
+                            qualifier: 'Task',
+                            criticality: 'StatusCriticality',
+                            criticalityRepresentation: #WITH_ICON }],
+         selectionField: [{ position: 5 }],
+         textArrangement: #TEXT_LAST
+       }
+  Status;
+
+  @EndUserText.label: 'Name'
+  @UI: { lineItem: [{ position: 10, importance: #HIGH, cssDefault: { width: '20rem'}  }],
+         identification: [{ position: 10, qualifier: 'Task' }],
+         selectionField: [{ position: 10 }],
+         multiLineText: true
+       }
+  Name;
+
+  @EndUserText.label: 'Description'
+  @UI: { lineItem: [{ position: 110, importance: #LOW, cssDefault: { width: '20rem'}  }],
+         fieldGroup: [{ position: 110, cssDefault: { width: '100rem'}, qualifier: 'Description' }],
+         multiLineText: true
+       }
+  Description_;
+
+  @EndUserText.label: 'Ticket'
+  @UI: { lineItem: [{ position: 30, importance: #HIGH  }],
+         identification: [{ position: 30, qualifier: 'Task' }],
+         selectionField: [{ position: 30 }]
+       }
+  Ticket;
+
+  @EndUserText.label: 'Created Date'
+  @UI: { lineItem: [{ position: 40, importance: #MEDIUM  }],
+         identification: [{ position: 40, qualifier: 'Task' }]
+       }
+  CreatedDate;
+
+  @EndUserText.label: 'DeliveryDate'
+  @UI: { lineItem: [{ position: 50, importance: #MEDIUM  }],
+         identification: [{ position: 50, qualifier: 'Task' }]
+       }
+  DeliveryDate;
+
+  @EndUserText.label: 'Package'
+  @UI: { lineItem: [{ position: 60, importance: #LOW, cssDefault: { width: '7rem'}  }],
+         identification: [{ position: 60, qualifier: 'Task' }]
+       }
+  Package_;
+
+  @EndUserText.label: 'Leader'
+  @UI: { lineItem: [{ position: 70, importance: #LOW, cssDefault: { width: '7rem'}  }],
+         identification: [{ position: 70, qualifier: 'Task' }]
+       }
+  Leader;
+
+  @EndUserText.label: 'Area'
+  @UI: { lineItem: [{ position: 90, importance: #MEDIUM, cssDefault: { width: '10rem'}  }],
+         identification: [{ position: 90, qualifier: 'Task' }],
+         textArrangement: #TEXT_LAST
+       }
+  Area;
+
+  @EndUserText.label: 'Priority'
+  @UI: { lineItem: [{ position: 100, importance: #MEDIUM, cssDefault: { width: '6rem'}  }],
+         identification: [{ position: 100, qualifier: 'Task' }],
+         textArrangement: #TEXT_LAST
+       }
+  Priority;
+
+  @EndUserText.label: 'Cancel Reason'
+  @UI: { lineItem: [{ position: 120, importance: #LOW, cssDefault: { width: '20rem'}  }],
+         fieldGroup: [{ position: 120, cssDefault: { width: '100rem'}, qualifier: 'cancel' }],
+         multiLineText: true
+       }
+  CancelReason;
+
+   @EndUserText.label: 'Attachment'
+  @UI: { lineItem: [{ position: 130, importance: #LOW, cssDefault: { width: '20rem'}  }],
+         identification: [{ position: 130, cssDefault: { width: '100rem'}, qualifier: 'Task' }],
+         multiLineText: true
+       }  
+  Attachment;
+
+  @UI.adaptationHidden: true
+  CreatedAt;
+  @UI.adaptationHidden: true
+  LastChangedBy;
+  @UI.adaptationHidden: true
+  LastChangedAt;
+
+}
